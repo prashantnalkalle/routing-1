@@ -1,0 +1,72 @@
+
+<div class="container" *ngIf="userObj">
+    
+<div class="row mt-5">
+    <div class="col-md-4">
+        <mat-card>
+            <img #userImage mat-card-image height="250px" width="250px" [src]="userObj.imageUrl || defaultImage"
+            (error)="userImage.onerror = null; userImage.src = defaultImage"
+            [alt]="userObj.name"
+            [title]="userObj.name">
+            <h4 class="font-weight-bold">
+            {{userObj.name}}
+            <small>({{userObj.role}})</small>
+        </h4>
+
+        <p class="mb-0">
+            {{userObj.description}}
+        </p>
+
+         <mat-card-actions class="d-flex justify-content-between">
+            <button mat-raised-button color="primary" routerLink="edit" (click)="onEdit()">Edit</button>
+            <button mat-raised-button color="warn"  (click)="onRemove()">Remove</button>
+        </mat-card-actions>
+        </mat-card>
+    </div>
+    <div class="col-md-8">
+        <mat-card class="mb-3">
+            <h4 class="font-weight-bold mb-0">Basic Information</h4>
+            <p class="mb-0">
+                User Id : {{userObj.id}}
+            </p>
+            <p class="mb-0">
+                Experience : {{userObj.experience}}
+            </p>
+           
+        </mat-card>
+
+        <mat-card class="mb-3">
+             <h4 class="font-weight-bold mb-0">Skills</h4>
+
+             <mat-chip-list>
+                <mat-chip *ngFor="let skill of userObj.skills">
+                    {{skill}}
+                </mat-chip>
+             </mat-chip-list>
+        </mat-card>
+
+        <mat-card>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="font-weight-bold mb-0">Current Address</h4>
+                    <p class="mb-2">{{userObj.currentAddress.country}}</p>
+                    <p class="mb-2">{{userObj.currentAddress.state}}</p>
+                    <p class="mb-2">{{userObj.currentAddress.city}}</p>
+                    <p class="mb-2">{{userObj.currentAddress.zipcode}}</p>
+
+
+                </div>
+                <div class="col-md-6">
+                    <h4 class="font-weight-bold mb-0">Permanent Address</h4>
+                    <p class="mb-2">{{userObj.permanentAddress.country}}</p>
+                    <p class="mb-2">{{userObj.permanentAddress.state}}</p>
+                    <p class="mb-2">{{userObj.permanentAddress.city}}</p>
+                    <p class="mb-2">{{userObj.permanentAddress.zipcode}}</p>
+                </div>
+            </div>
+        </mat-card>
+
+
+    </div>
+</div>
+</div>
