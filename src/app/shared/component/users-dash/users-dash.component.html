@@ -5,15 +5,18 @@
 <div class="container">
     <div class="row mt-5">
 
-    <div class="col-md-4  offset-md-3">
+    <div class="col-md-4 mt-5">
         <ul class="list-group mb-4"> 
-            <li class="list-group-item" routerLink='{{user.id}}' *ngFor="let user of users">
+            <li class="list-group-item" (click)="navigatetouser(user)" *ngFor="let user of users">
                 {{user.name}} {{user.id}}
             </li> 
         </ul>
         <button mat-raised-button color="primary" routerLink="add" class="align-items-end">Add User</button>
 
-    </div>     
+    </div>  
+    <div class="col-md-8">
+        <router-outlet></router-outlet>
+    </div>   
 
 </div>
 </div>

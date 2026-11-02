@@ -1,2 +1,6 @@
+<div class="loading-overlay" *ngIf="loading$ | async" role="status" aria-label="Loading">
+  <mat-spinner diameter="56"></mat-spinner>
+</div>
+<!-- <app-auth></app-auth> -->
 <app-nav-bar></app-nav-bar>
 <router-outlet></router-outlet>

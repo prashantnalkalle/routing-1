@@ -71,7 +71,7 @@
                                     <strong class="text-danger font-weight-bold" *ngIf="skill.touched && skill.hasError('required')">Skill is required.</strong>
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-sm btn-outline-danger font-weight-bold" *ngIf="i>0">Remove</button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger font-weight-bold" *ngIf="i>0" (click)="removeSkill(i)">Remove</button>
                                 </div>
                             </div>
                         </div>
