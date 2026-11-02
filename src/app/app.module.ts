@@ -9,12 +9,17 @@ import { UsersFormComponent } from './shared/component/users-form/users-form.com
 import { MaterialModule } from './material/material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './shared/component/home/home.component';
-import { ProductComponent } from './shared/component/product/product.component';
 import { AboutComponent } from './shared/component/about/about.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserDetailsComponent } from './shared/component/user-details/user-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GetConfirmComponent } from './get-confirm/get-confirm.component';
+import { ProductDashComponent } from './shared/component/product-dash/product-dash.component';
+import { ProductFormComponent } from './shared/component/product-form/product-form.component';
+import { ProductCardComponent } from './shared/component/product-card/product-card.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -23,10 +28,13 @@ import { GetConfirmComponent } from './get-confirm/get-confirm.component';
     UsersDashComponent,
     UsersFormComponent,
     HomeComponent,
-    ProductComponent,
     AboutComponent,
     UserDetailsComponent,
-    GetConfirmComponent
+    GetConfirmComponent,
+    ProductDashComponent,
+    ProductFormComponent,
+    ProductCardComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +44,13 @@ import { GetConfirmComponent } from './get-confirm/get-confirm.component';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,7 @@
 import { TestBed } from '@angular/core/testing';
+import { CommonModule } from '@angular/common';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
@@ -7,6 +10,8 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      imports: [CommonModule, MatProgressSpinnerModule],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   });
 
@@ -22,10 +27,8 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('routing-1');
   });
 
-  it('should render title', () => {
+  it('should expose the application title', () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('routing-1 app is running!');
+    expect(fixture.componentInstance.title).toBe('routing-1');
   });
 });

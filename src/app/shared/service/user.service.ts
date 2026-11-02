@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, filter, map, Observable, of, Subject, throwError } from 'rxjs';
-import { users } from 'src/const/users';
 import { environment } from 'src/environments/environment';
 import { Ires, Iuser } from 'src/module/interface';
 
@@ -13,6 +12,9 @@ export class UserService {
   post_url=`${this.Base_url}/users.json`
   // userArr:Iuser[] =[]
   constructor(private _http:HttpClient) { }
+
+  private removeIdSub:Subject<string>=new Subject()
+  removeIdObs:Observable<string> = this.removeIdSub.asObservable()
 
   editObj = new BehaviorSubject<Iuser | null>(null)
   editObjObser = this.editObj.asObservable()
@@ -42,6 +44,10 @@ export class UserService {
 
   editUser(obj:Iuser) {
     this.editObj.next(obj)
+  }
+
+  removeUser(id:string) {
+     this.removeIdSub.next(id)
   }
 
   postUser(user:Iuser):Observable<Ires> {

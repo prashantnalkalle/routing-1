@@ -30,26 +30,41 @@ export class UsersFormComponent implements OnInit {
     this.enablecheckbox(),
     this.pathchcurrent()
 
-    this.editUserId = this.route.snapshot.paramMap.get('id');
-    if (this.editUserId){
-      this.iseditmode = true;
-      this.http.editObjObser
-        .subscribe(res =>{
-          if(res && res.id === this.editUserId){
-            this.patchUser(res)
-          } 
-        })
-    }
+    // this.editUserId = this.route.snapshot.paramMap.get('id');
+    // if (this.editUserId){
+    //   this.iseditmode = true;
+    //   this.http.editObjObser
+    //     .subscribe(res =>{
+    //       if(res && res.id === this.editUserId){
+    //         this.patchUser(res)
+    //       } 
+    //     })
+    // }
+
+    this.route.queryParams.subscribe({
+      next:res =>{
+        if(res['user']){
+          this.iseditmode = true
+          this.skillArray.clear();
+          let user = JSON.parse(res['user'])
+          this.editUserId = user.id
+          for (const skill of user.skills ) {
+            this.skillArray.push(new FormControl(skill, Validators.required));
+          }
+          this.userform.patchValue(user);
+        }
+      }
+    })
 
   }
 
-  patchUser(user: Iuser) {
-    this.skillArray.clear();
-    for (const skill of user.skills ) {
-      this.skillArray.push(new FormControl(skill, Validators.required));
-    }
-    this.userform.patchValue(user);
-  }
+  // patchUser(user: Iuser) {
+  //   this.skillArray.clear();
+  //   for (const skill of user.skills ) {
+  //     this.skillArray.push(new FormControl(skill, Validators.required));
+  //   }
+  //   this.userform.patchValue(user);
+  // }
 
   createform(){
     this.userform=new FormGroup({
@@ -113,6 +128,12 @@ export class UsersFormComponent implements OnInit {
 
   }
 
+  removeSkill(index: number) {
+    if (index > 0 && index < this.skillArray.length) {
+      this.skillArray.removeAt(index)
+    }
+  }
+
   onUserAdd() {
     if (this.userform.invalid) {
       this.userform.markAllAsTouched();
@@ -128,7 +149,12 @@ export class UsersFormComponent implements OnInit {
       .subscribe({
         next:res =>{
           console.log(res)
-          this.routes.navigate(['users'])
+          this.userform.reset()
+          this.routes.navigate(['users'],{
+            queryParams:{
+              user:JSON.stringify({...user,id:res.name})
+            }
+          })
           this.snackbar.opensnackbar(`The New User With Id ${res.name} Is Added Successfully!!`)
         },
         error:err =>{
@@ -148,13 +174,17 @@ export class UsersFormComponent implements OnInit {
     this.http.UpdateUser(user)
       .subscribe({ 
         next:res =>{
-          console.log(res)
-          this.routes.navigate(['users'])
+          this.userform.reset()
+          this.routes.navigate(['users'],{
+            queryParams:{
+              Updateduser:JSON.stringify(user)
+            }
+          })
           this.snackbar.opensnackbar(`The User With Id ${res.id} Is Updated Successfully!!`)
 
         },
         error:err =>{
-          console.log(err)
+         this.snackbar.opensnackbar(err)
         }
       })
   }

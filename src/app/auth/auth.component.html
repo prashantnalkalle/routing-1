@@ -1,0 +1,40 @@
+<main class="auth-page">
+  <section class="auth-card">
+    <h1>{{ mode === 'login' ? 'Log in' : 'Register' }}</h1>
+
+    <div class="mode-switch">
+      <button type="button" [class.active]="mode === 'login'" (click)="setMode('login')">Log in</button>
+      <button type="button" [class.active]="mode === 'register'" (click)="setMode('register')">Register</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="handleFormSubmit()" novalidate>
+      <ng-container *ngIf="mode === 'register'">
+        <label for="name">Name</label>
+        <input id="name" type="text" formControlName="name" autocomplete="name">
+      </ng-container>
+
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" autocomplete="email">
+      <strong class="field-error" *ngIf="fields.email.touched && fields.email.hasError('required')">*Email is required.</strong>
+      <strong class="field-error" *ngIf="fields.email.touched && fields.email.hasError('email')">*Enter a valid email.</strong>
+
+      <label for="password">Password</label>
+      <input id="password" type="password" formControlName="password" [attr.autocomplete]="mode === 'login' ? 'current-password' : 'new-password'">
+      <strong class="field-error" *ngIf="fields.password.touched && fields.password.hasError('required')">*Password is required.</strong>
+
+      <ng-container *ngIf="mode === 'register'">
+        <label for="userRole">User role</label>
+        <select id="userRole" formControlName="userRole">
+          <option [ngValue]="null" disabled>Select a user role</option>
+          <option value="admin">Admin</option>
+          <option value="superAdmin">Superadmin</option>
+          <option value="Candidate">Candidate</option>
+        </select>
+        <strong class="field-error" *ngIf="fields.userRole.touched && fields.userRole.hasError('required')">*Select a user role.</strong>
+      </ng-container>
+
+      <button class="submit" *ngIf="mode === 'login'" type="submit">Log In</button>
+      <button class="submit" *ngIf="mode === 'register'" type="button" (click)="signup()">Register</button>
+    </form>
+  </section>
+</main>

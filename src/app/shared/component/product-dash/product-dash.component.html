@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="d-flex justify-content-end mt-3">
+        <button class="btn btn-primary" routerLink="add">Add Product</button>
+    </div>
+    <div class="row my-4"> 
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body p-0 ">
+                    <ul class="list-group">
+                        <li class="list-group-item" 
+                            (click)="navigatetoproduct(prod)" 
+                            *ngFor="let prod of productArr"
+                        >
+                            {{prod.title}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="row mt-5" *ngIf="product">
+    <div class="col-md-4 offset-md-2">
+        <div class="card">
+             <div class="card-body">
+                <p>
+                    {{product.title}} is available in stock!!!
+                </p>
+
+                <button mat-raised-button (click)="navigatetoform()" color="primary">Edit</button>
+                <button mat-raised-button (click)="RemoveProduct()" color="warn">Remove</button>
+            </div>
+        </div>
+
+    </div>
+</div>
