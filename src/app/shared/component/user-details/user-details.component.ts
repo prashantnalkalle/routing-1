@@ -43,7 +43,7 @@ export class UserDetailsComponent implements OnInit {
            
         },
         error:err =>{
-          this.snackbar.opensnackbar(err)
+          this.snackbar.opensnackbar(err.message)
         }
       })
     })
@@ -89,7 +89,7 @@ export class UserDetailsComponent implements OnInit {
                 this._router.navigate(['users'])
             },
             error:err =>{
-              this.snackbar.opensnackbar(err)
+              this.snackbar.opensnackbar(err.message)
             }
           })
 
