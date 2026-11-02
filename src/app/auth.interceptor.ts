@@ -18,7 +18,10 @@ export class AuthInterceptor implements HttpInterceptor {
     AppComponent.startLoading();
 
     const token = this.auth.gettoken();
-    const authenticatedRequest = token
+    // This JWT is issued by our auth API. Firebase Realtime Database does not
+    // trust it, so only send it to that API (not to Firebase URLs).
+    const isAuthApiRequest = request.url.startsWith(this.auth.Auth_url);
+    const authenticatedRequest = token && isAuthApiRequest
       ? request.clone({ setHeaders: { Authorization: `Bearer ${token}` } })
       : request;
 

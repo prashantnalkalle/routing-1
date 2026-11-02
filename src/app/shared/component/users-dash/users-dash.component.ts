@@ -72,7 +72,7 @@ export class UsersDashComponent implements OnInit {
           this.users = res
         },
         error:err =>{
-          this.snackbar.opensnackbar(err)
+          this.snackbar.opensnackbar(err.message)
         }
       })
   }

@@ -158,7 +158,7 @@ export class UsersFormComponent implements OnInit {
           this.snackbar.opensnackbar(`The New User With Id ${res.name} Is Added Successfully!!`)
         },
         error:err =>{
-          this.snackbar.opensnackbar(err)
+          this.snackbar.opensnackbar(err.message)
         }
       })
   }
@@ -184,7 +184,7 @@ export class UsersFormComponent implements OnInit {
 
         },
         error:err =>{
-         this.snackbar.opensnackbar(err)
+         this.snackbar.opensnackbar(err.message)
         }
       })
   }
